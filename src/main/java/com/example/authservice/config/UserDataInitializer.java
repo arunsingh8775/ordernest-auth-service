@@ -30,11 +30,11 @@ public class UserDataInitializer implements ApplicationRunner {
     @Transactional
     public void run(ApplicationArguments args) {
         List<SeedUser> seedUsers = List.of(
-                new SeedUser("admin@ordernest.com", "Admin@1234", "Order", "Admin", "ADMIN"),
-                new SeedUser("arun@ordernest.com", "User@1234", "Arun", "Singh", "USER"),
-                new SeedUser("priya@ordernest.com", "User@1234", "Priya", "Sharma", "USER"),
-                new SeedUser("rahul@ordernest.com", "User@1234", "Rahul", "Verma", "USER"),
-                new SeedUser("neha@ordernest.com", "User@1234", "Neha", "Gupta", "USER")
+                new SeedUser("admin@ordernestrandom123.com", "Admin@1234", "Order", "Admin", "ADMIN"),
+                new SeedUser("arun@ordernestrandom123.com", "User@1234", "Arun", "Singh", "USER"),
+                new SeedUser("priya@ordernestrandom123.com", "User@1234", "Priya", "Sharma", "USER"),
+                new SeedUser("rahul@ordernestrandom123.com", "User@1234", "Rahul", "Verma", "USER"),
+                new SeedUser("neha@ordernestrandom123.com", "User@1234", "Neha", "Gupta", "USER")
         );
 
         int inserted = 0;
