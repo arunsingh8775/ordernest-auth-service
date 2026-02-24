@@ -4,6 +4,7 @@ import com.example.authservice.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -17,10 +18,13 @@ import java.util.UUID;
 @Service
 public class JwtService {
 
-    private static final String SECRET = "change-me-in-prod-change-me-in-prod-change-me";
     private static final long EXPIRATION_MILLIS = 60 * 60 * 1000;
 
-    private final SecretKey signingKey = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
+    private final SecretKey signingKey;
+
+    public JwtService(@Value("${app.jwt.secret}") String secret) {
+        this.signingKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
 
     public String generateToken(User user) {
         Instant now = Instant.now();
