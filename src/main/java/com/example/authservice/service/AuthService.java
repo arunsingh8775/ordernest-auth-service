@@ -82,4 +82,23 @@ public class AuthService {
                 user.isActive()
         );
     }
+
+    @Transactional(readOnly = true)
+    public UserInfoResponse getCurrentUser(String email) {
+        if (email == null || email.isBlank()) {
+            throw new UnauthorizedException("Invalid authentication context");
+        }
+
+        User user = userRepository.findByEmail(email.trim().toLowerCase())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found for authenticated token"));
+
+        return new UserInfoResponse(
+                user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getRole(),
+                user.isActive()
+        );
+    }
 }
