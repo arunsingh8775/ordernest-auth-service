@@ -4,11 +4,14 @@ import com.example.authservice.dto.AuthResponse;
 import com.example.authservice.dto.LoginRequest;
 import com.example.authservice.dto.MessageResponse;
 import com.example.authservice.dto.RegisterRequest;
+import com.example.authservice.dto.UserInfoResponse;
 import com.example.authservice.entity.User;
 import com.example.authservice.exception.ConflictException;
+import com.example.authservice.exception.ResourceNotFoundException;
 import com.example.authservice.exception.UnauthorizedException;
 import com.example.authservice.repository.UserRepository;
 import com.example.authservice.security.JwtService;
+import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -63,5 +66,20 @@ public class AuthService {
 
         String token = jwtService.generateToken(user);
         return new AuthResponse(token, user.getId(), user.getRole());
+    }
+
+    @Transactional(readOnly = true)
+    public UserInfoResponse getUserById(UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+
+        return new UserInfoResponse(
+                user.getId(),
+                user.getEmail(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getRole(),
+                user.isActive()
+        );
     }
 }
