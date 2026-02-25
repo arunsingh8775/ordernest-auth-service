@@ -4,8 +4,12 @@ import com.example.authservice.dto.AuthResponse;
 import com.example.authservice.dto.LoginRequest;
 import com.example.authservice.dto.MessageResponse;
 import com.example.authservice.dto.RegisterRequest;
+import com.example.authservice.dto.UserInfoResponse;
 import com.example.authservice.service.AuthService;
 import jakarta.validation.Valid;
+import java.util.UUID;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,5 +37,10 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
         AuthResponse response = authService.login(request);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<UserInfoResponse> getUserById(@PathVariable UUID userId) {
+        return ResponseEntity.ok(authService.getUserById(userId));
     }
 }
