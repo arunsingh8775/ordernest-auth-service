@@ -8,6 +8,7 @@ import com.example.authservice.dto.UserInfoResponse;
 import com.example.authservice.service.AuthService;
 import jakarta.validation.Valid;
 import java.util.UUID;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.HttpStatus;
@@ -42,5 +43,10 @@ public class AuthController {
     @GetMapping("/users/{userId}")
     public ResponseEntity<UserInfoResponse> getUserById(@PathVariable UUID userId) {
         return ResponseEntity.ok(authService.getUserById(userId));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserInfoResponse> getCurrentUser(@AuthenticationPrincipal String email) {
+        return ResponseEntity.ok(authService.getCurrentUser(email));
     }
 }
