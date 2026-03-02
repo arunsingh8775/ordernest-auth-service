@@ -6,6 +6,7 @@ import com.example.authservice.dto.MessageResponse;
 import com.example.authservice.dto.RegisterRequest;
 import com.example.authservice.dto.UserInfoResponse;
 import com.example.authservice.entity.User;
+import com.example.authservice.entity.UserRole;
 import com.example.authservice.exception.ConflictException;
 import com.example.authservice.exception.ResourceNotFoundException;
 import com.example.authservice.exception.UnauthorizedException;
@@ -40,7 +41,7 @@ public class AuthService {
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
-        user.setRole("USER");
+        user.setRole(UserRole.USER);
         user.setActive(true);
 
         userRepository.save(user);
